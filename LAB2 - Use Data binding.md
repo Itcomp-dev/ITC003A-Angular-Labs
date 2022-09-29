@@ -13,17 +13,21 @@ Before working on the view, we are going to create the model classes first:
 		}
 2. To add a priority field to the task model, we will have to create a enum first, in the same file add an enumeration called `Priority` with the three values: Low, Medium, High
 
+		```typescript
 		export enum Priority { 
 			Low = 0,
 			Normal = 1,
 			High = 2
 		}
+		```
 3. Now add a new property `priority` of type `Priority` to the `Task` interface
 
+		```typescript
 		export interface Task { 
 			///...
 			priority: Priority 
 		}
+		```
 
 ## Create the view (HTML)
 After setting up the necessary models, we are going to build the user interface which is basically a form that contains an **input** for the task description, **dropdown** to select a priority and a button to **submit** the data.
@@ -31,9 +35,12 @@ After setting up the necessary models, we are going to build the user interface 
  1. We are going to work directly on the `AppComponent`, it comes  with the Angular starter template by default, go to `app.component.html` and empty the file
 2. In the same file, start by adding an HTML `input` element
 
+		```html
 		<input  placeholder="Description"  />
+		```
 3. Add a `select` HTML element, with an `option` for each priority value like the following:
-		
+
+		```html
 		<select>
 			<option  value="0">
 				Low
@@ -45,12 +52,15 @@ After setting up the necessary models, we are going to build the user interface 
 				High
 			</option>
 		</select>
+		```
 
 4. Finally, add a submit `button` to the form
 
+		```html
 		<button>
 			Add task
 		</button>
+		```
 
 ## Create the view model (TS)
 Before binding the view with the view-model we need the actual data and properties, so in this section we are going to be working on the TS component class (`app.component.ts`)
@@ -79,21 +89,24 @@ Before binding the view with the view-model we need the actual data and properti
 		}
 3. Create a `tasks` field that will keep track of all the saved tasks
 
+		```typescript
 		tasks: Task[] = [];
-
+		```
 4. Create a method `addTask` that will be reponsibile of saving the new task into `tasks`
-		
+
+		```typescript
 		addTask(task: Task): void {
 			//TODO implement
 		}
-5. Implement addTask method so it assign a new `id` to the task and save it in `tasks` field.
+		```
+5. Implement `addTask` method so it assign a new `id` to the task and save it in `tasks` field.
 
 ## Bind data
 Now, we can bind the property in the view model with the elements in the view
 
  - **2-way binding**
  For the `input` field, use 2-way binding using `ngModel` since we want to show the description of the new task but also update it when the user type data:
- 
+
 		 <input  [(ngModel)]="newTask.description" placeholder="Description"   />
  
  - **Property binding**
