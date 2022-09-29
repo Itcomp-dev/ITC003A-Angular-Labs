@@ -5,7 +5,7 @@
 As we know already, Angular is written in **TypeScript**. We need **Node** and **npm** to compile the files into **JavaScript** after that, we can deploy our application. For this purpose, **Node.js** must be installed in your system. Hopefully, you have installed **Node.js** on your machine.
 
  **1. Install Node.js**
-Head over the Node.js official website and download the the LTS version: [`https://nodejs.org/en/`](https://nodejs.org/en/)
+Head over the Node.js official website and download the the LTS version: https://nodejs.org/en/
 After the installation is completed, you can check it using the below command :
 
     node --version
