@@ -20,8 +20,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar'; 
 import { RouterModule, Routes } from '@angular/router';
 import { AuthModule } from './auth/auth.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTaskService } from './http-task.service';
+import { AuthInterceptor } from './auth.interceptor';
 
 const routes: Routes = [
   {path: "", redirectTo: "tasks", pathMatch: "full"},
@@ -55,7 +56,8 @@ const routes: Routes = [
     HttpClientModule
   ],
   providers: [
-    {provide: TaskService, useClass: HttpTaskService}
+    {provide: TaskService, useClass: HttpTaskService},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

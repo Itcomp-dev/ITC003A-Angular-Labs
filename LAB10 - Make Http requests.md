@@ -128,4 +128,43 @@ It's always important to handle request errors and display feedback messaged to 
 			})
 		}
 
+
 ## Intercepting requests
+Intercepting requests and responses is useful for performing repitive tasks such as adding authorization headers,  logging requests, extracting error messages.
+In this section we will create an interceptor that add a fake token in the authorization header.
+
+1. Use the Angular CLI to generate a new interceptor `AuthInterceptor` :
+	
+		ng generate interceptor auth
+
+2. Go to `AuthService` and add a method that return a fake authorization header
+
+		getAuthorizationHeader() {
+			let  fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+			return  `Bearer ${fakeToken}`.
+		}
+3. Inject the `AuthService`  in the constructor of the `AuthInterceptor`
+
+		constructor(private  authService: AuthService) {}
+4. Implement `intercept`  method so that it add the authorization header to the request
+
+		intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+			let  authHeader= this.authService.getAuthorizationHeader()
+			let newRequest = request.clone({headers:  request.headers.set('Authorization', authHeader)})
+			return  next.handle(newRequest );
+		}
+5. To make the interceptor work, you have to register it in the dependcy Injection, use the [`HTTP_INTERCEPTORS`](https://angular.io/api/common/http/HTTP_INTERCEPTORS) injection token
+
+		@NgModule({
+			...,
+			provider: [
+				...,
+				{provide:  HTTP_INTERCEPTORS, useClass:  AuthInterceptor, multi:  true}
+			]
+		}) 
+		
+	> We set `multi` option to true so that we can define multiple interceptors.
+
+6. Launch the app and inspect the network, you should find an authorization header added for each outgoing request, example:
+
+		Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
