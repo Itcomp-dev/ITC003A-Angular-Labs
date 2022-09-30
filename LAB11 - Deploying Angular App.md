@@ -83,9 +83,8 @@ Now that we have configured Angular to build the files, we need to go in IIS Man
 
 	![](https://raw.githubusercontent.com/Itcomp-dev/ITC003A-Angular-Labs/main/.assets/iis.png)
 
-
-4.  **Right Click** on **Default Web Site >**  **Add Application** to create a new application
-	![](https://raw.githubusercontent.com/Itcomp-dev/ITC003A-Angular-Labs/main/.assets/iis_app.png)
+4.  **Right Click** on **Default Web Site >**  **Add Application**
+![](https://raw.githubusercontent.com/Itcomp-dev/ITC003A-Angular-Labs/main/.assets/iis_app.png)
 
 5. For the **Alias** field, type **task-manager**
 
